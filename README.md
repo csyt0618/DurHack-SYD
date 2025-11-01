@@ -1,2 +1,2 @@
 # DurHack-SYD
-Collab between Yuvika, Saniya and Devashya 
+Collab between Yuvika, Saniya and Devashy
