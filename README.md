@@ -8,10 +8,10 @@ Task list:
  - webpage design
  - css
  - login page
-    -username and password
+    - username and password
  - home page
-    -the meter and parragraph enter page
+    - the meter and parragraph enter page
     - then output from gemini aof recipes
  - History
-    -graphs of previous data 
+    - graphs of previous data 
  - gemini api connecting
