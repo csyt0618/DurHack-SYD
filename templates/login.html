@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-box">
+      <h2>Login</h2>
+      <form id="loginForm">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+
+          <button type="submit">Login</button>
+      </form>
+
+      <p>Don’t have an account?</p> <button><a href="/register">Register here</a></button>
+
+      <button class="back-to-home", onclick="goHome()">Back to Home</button>
+      
+      <!-- Linking JavaScript -->
+      <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+
+      <!-- Where error message will show -->
+      <p id="error-message" style="color: red; font-weight: bold"></p>
+    </div>
+
+    
+    
+
+
+</body>
+</html>
+

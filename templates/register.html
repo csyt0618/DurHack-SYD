@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+  <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+</head>
+<body>
+  <h1>Create a New Account</h1>
+
+  <form onsubmit="return registerUser()">
+    <input type="text" id="newUsername" placeholder="Choose a username" required>
+    <input type="password" id="newPassword" placeholder="Choose a password" required>
+    <button type="submit">Register</button>
+  </form>
+
+  <p id="registerMessage"></p>
+  
+  <p>Already have an account? <a href="/">Login here</a></p>
+</body>
+</html>
