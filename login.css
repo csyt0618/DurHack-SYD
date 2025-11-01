@@ -1,0 +1,62 @@
+/* Style for the whole page */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #02d3d0;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 100vh; /*vertical height*/
+  margin: 0;
+}
+
+/* Signup form box */
+.login-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 320px;
+}
+
+/* Heading */
+h2 {
+  text-align: center;
+  color: #2a7f62;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+/* Input fields */
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0; /*second part- left right margin*/
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+
+/* Button */
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #9dc209;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+/* Hover effect */
+button:hover {
+  background-color: #7fa507;
+}
