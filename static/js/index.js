@@ -77,3 +77,66 @@ function goToLogin() {
 function goHome() {
   window.location.href = "/";
 }
+
+/*only for home.html*/
+document.addEventListener("DOMContentLoaded", () => {
+  const submitBtn = document.querySelector(".submitBtn");
+  const paragraphBox = document.querySelector("textarea");
+  const output = document.getElementById("dishOutput");
+
+  if (!submitBtn || !paragraphBox) return; // not on home page
+
+  submitBtn.addEventListener("click", async () => {
+    const sliders = {
+      stress: +document.getElementById("stressRange").value,
+      happiness: +document.getElementById("happinessRange").value,
+      energy: +document.getElementById("energyRange").value,
+      sociability: +document.getElementById("sociabilityRange").value,
+      appetite: +document.getElementById("appetiteRange").value,
+      socialStress: +document.getElementById("socialStress").value,
+      emotionalStress: +document.getElementById("emotionalStress").value,
+      physicalStress: +document.getElementById("physicalStress").value,
+      sadness: +document.getElementById("sadness").value,
+      motivation: +document.getElementById("motivation").value,
+      contentment: +document.getElementById("contentment").value,
+      physicalFatigue: +document.getElementById("physicalFatigue").value,
+      emotionalFatigue: +document.getElementById("emotionalFatigue").value,
+      energetic: +document.getElementById("energetic").value,
+      introverted: +document.getElementById("introverted").value,
+      socialAnxious: +document.getElementById("socialAnxious").value,
+      binging: +document.getElementById("binging").value,
+      craving: document.getElementById("cravingSelect").value,
+      timeOfDay: document.getElementById("timeSelect").value
+    };
+
+    const paragraph = paragraphBox.value.trim();
+    output.textContent = "Thinking...";
+
+    try {
+      const resp = await fetch("/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sliders, paragraph })
+      });
+
+      const data = await resp.json();
+
+      if (!data.ok) {
+        output.textContent = "Error: " + (data.error || "Unknown");
+        return;
+      }
+
+      const r = data.result;
+      output.innerHTML = `
+        <p>🍽 Dish: ${r.dish}</p><br>
+        <p>Score: ${r.score}</p><br>
+        <p>Why: ${r.reason}</p><br>
+        <p>Ingredients:<br> - ${r.ingredients.join("<br> - ")}</p><br>
+        <p>Suggestion: ${r.suggestion}</p>
+      `;
+    } catch (err) {
+      output.textContent = "Network or server error: " + err;
+    }
+  });
+});
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -118,6 +118,17 @@
     </section>
   </main>
 
+     DISH RESULT 
+    <section id="dishResult" class="result-box">
+      <h2>Recommended Dish</h2>
+      <p id="dishOutput">Your result will appear here...</p>
+    </section>
+  </main>
+
+
+
+
+
   <script>
     // Dropdown menu
     const userBtn = document.getElementById("userBtn");
@@ -159,5 +170,172 @@
 
 
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mood-Based Dish Recommender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body>
+  <header>
+    <div class="user-menu">
+      <button id="userBtn">Username ▼</button>
+      <div id="dropdown" class="dropdown-content">
+        <button class="loginBtn" onclick="goToLogin()">Go to Login Page</button>
+        <a href="#">Settings</a>
+        <a href="#">Light/Dark Mode</a>
+        <a href="#">Record History</a>
+      </div>
+    </div>
+    <h1>How are you feeling today?</h1>
+  </header>
+
+  <main>
+    <section class="mood-section">
+      <!-- STRESS -->
+      <div class="mood-box">
+        <h2>Stress</h2>
+        <input type="range" min="0" max="100" value="50" class="slider" id="stressRange" />
+        <span id="stressRangeValue">50%</span>
+        <button class="moreBtn" data-target="stressMore">More...</button>
+        <div id="stressMore" class="hidden">
+          <label>Social: <input type="range" min="0" max="100" value="50" class="subSlider" id="socialStress" /></label>
+          <span id="socialStressValue">50%</span>
+          <label>Emotional: <input type="range" min="0" max="100" value="50" class="subSlider" id="emotionalStress" /></label>
+          <span id="emotionalStressValue">50%</span>
+          <label>Physical: <input type="range" min="0" max="100" value="50" class="subSlider" id="physicalStress" /></label>
+          <span id="physicalStressValue">50%</span>
+        </div>
+      </div>
+
+      <!-- HAPPINESS -->
+      <div class="mood-box">
+        <h2>Happiness</h2>
+        <input type="range" min="0" max="100" value="50" class="slider" id="happinessRange" />
+        <span id="happinessRangeValue">50%</span>
+        <button class="moreBtn" data-target="happinessMore">More...</button>
+        <div id="happinessMore" class="hidden">
+          <label>Sadness: <input type="range" min="0" max="100" value="50" class="subSlider" id="sadness" /></label>
+          <span id="sadnessValue">50%</span>
+          <label>Motivation: <input type="range" min="0" max="100" value="50" class="subSlider" id="motivation" /></label>
+          <span id="motivationValue">50%</span>
+          <label>Contentment: <input type="range" min="0" max="100" value="50" class="subSlider" id="contentment" /></label>
+          <span id="contentmentValue">50%</span>
+        </div>
+      </div>
+
+      <!-- ENERGY -->
+      <div class="mood-box">
+        <h2>Energy</h2>
+        <input type="range" min="0" max="100" value="50" class="slider" id="energyRange" />
+        <span id="energyRangeValue">50%</span>
+        <button class="moreBtn" data-target="energyMore">More...</button>
+        <div id="energyMore" class="hidden">
+          <label>Physical Fatigue: <input type="range" min="0" max="100" value="50" class="subSlider" id="physicalFatigue" /></label>
+          <span id="physicalFatigueValue">50%</span>
+          <label>Emotional Fatigue: <input type="range" min="0" max="100" value="50" class="subSlider" id="emotionalFatigue" /></label>
+          <span id="emotionalFatigueValue">50%</span>
+        </div>
+      </div>
+
+      <!-- SOCIABILITY -->
+      <div class="mood-box">
+        <h2>Sociability</h2>
+        <input type="range" min="0" max="100" value="50" class="slider" id="sociabilityRange" />
+        <span id="sociabilityRangeValue">50%</span>
+        <button class="moreBtn" data-target="sociabilityMore">More...</button>
+        <div id="sociabilityMore" class="hidden">
+          <label>Energetic: <input type="range" min="0" max="100" value="50" class="subSlider" id="energetic" /></label>
+          <span id="energeticValue">50%</span>
+          <label>Introverted: <input type="range" min="0" max="100" value="50" class="subSlider" id="introverted" /></label>
+          <span id="introvertedValue">50%</span>
+          <label>Socially Anxious: <input type="range" min="0" max="100" value="50" class="subSlider" id="socialAnxious" /></label>
+          <span id="socialAnxiousValue">50%</span>
+        </div>
+      </div>
+
+      <!-- APPETITE -->
+      <div class="mood-box">
+        <h2>Appetite</h2>
+        <input type="range" min="0" max="100" value="50" class="slider" id="appetiteRange" />
+        <span id="appetiteRangeValue">50%</span>
+        <button class="moreBtn" data-target="appetiteMore">More...</button>
+        <div id="appetiteMore" class="hidden">
+          <label>Binging: <input type="range" min="0" max="100" value="50" class="subSlider" id="binging" /></label>
+          <span id="bingingValue">50%</span>
+          <label>Cravings:
+            <select id="cravingSelect">
+              <option value="sweet">Sweet</option>
+              <option value="salty">Salty</option>
+              <option value="spicy">Spicy</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="mood-box">
+        <h2>Time of Day</h2>
+        <select id="timeSelect">
+          <option value="morning">Morning</option>
+          <option value="afternoon">Afternoon</option>
+          <option value="evening">Evening</option>
+          <option value="night">Night</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- TEXT INPUT -->
+    <section class="text-section">
+      <h2>Type your feelings in here:</h2>
+      <textarea id="userParagraph" placeholder="Type your feelings here..."></textarea>
+    </section>
+
+    <button class="submitBtn">Submit Mood</button>
+
+    <!-- DISH RESULT -->
+    <section id="dishResult" class="result-box">
+      <h2>Recommended Dish</h2>
+      <p id="dishOutput">Your result will appear here...</p>
+    </section>
+  </main>
+
+  <script>
+    // Dropdown
+    const userBtn = document.getElementById("userBtn");
+    const dropdown = document.getElementById("dropdown");
+    userBtn.addEventListener("click", () => {
+      dropdown.classList.toggle("show");
+    });
+
+    // Toggle "More..."
+    document.querySelectorAll(".moreBtn").forEach(button => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.target);
+        target.classList.toggle("hidden");
+      });
+    });
+
+    // Slider updates
+    function updateSliderValue(slider, display) {
+      slider.addEventListener("input", () => {
+        display.textContent = slider.value + "%";
+      });
+    }
+    document.querySelectorAll(".slider, .subSlider").forEach(slider => {
+      const display = document.getElementById(slider.id + "Value");
+      updateSliderValue(slider, display);
+    });
+  </script>
+
+  <!-- LINK TO YOUR JS -->
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>

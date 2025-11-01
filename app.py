@@ -1,5 +1,12 @@
 from flask import Flask, render_template, request, jsonify
-import json, os
+import json
+import os
+from google import genai
+from dotenv import load_dotenv
+
+# Load API key
+load_dotenv()
+client = genai.Client()
 
 app = Flask(__name__)
 
@@ -64,6 +71,49 @@ def process():
 @app.route("/home")
 def after_login():
     return render_template("home.html")
+
+
+
+#GEMINI API 
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    try:
+        data = request.get_json()
+        sliders = data.get('sliders', {})
+        paragraph = data.get('paragraph', '')
+
+        prompt = f"""
+You are a friendly culinary assistant. The user gave these mood values and a short note.
+
+MOOD DATA: {json.dumps(sliders, indent=2)}
+USER NOTE: \"\"\"{paragraph.strip()}\"\"\"
+
+Your task:
+1. Suggest one dish that matches their current mood or helps them feel better.
+2. Explain briefly *why* that dish suits their state.
+3. List 3–8 key ingredients.
+4. Add one short serving or preparation suggestion.
+5. Return **only valid JSON** with:
+   dish, reason, ingredients (array), suggestion, score (0–100).
+"""
+
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
+
+        raw = response.text
+
+        import re
+        try:
+            result = json.loads(raw)
+        except Exception:
+            m = re.search(r'(\{[\s\S]*\})', raw)
+            result = json.loads(m.group(1)) if m else {"raw": raw}
+
+        return jsonify({"ok": True, "result": result})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
