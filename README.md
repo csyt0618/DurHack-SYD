@@ -3,9 +3,10 @@ Collab between Yuvika, Saniya and Devashy
 +
 
 Task list:
--database setup using excel
--webpage design
--css
+
+ - database setup using excel
+ - webpage design
+ - css
  - login page
     -username and password
  - home page
@@ -13,4 +14,4 @@ Task list:
     - then output from gemini aof recipes
  - History
     -graphs of previous data 
--gemini api connecting
+ - gemini api connecting
