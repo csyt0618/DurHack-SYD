@@ -171,6 +171,32 @@
     });
   </script>
 
+  <script>
+  // Light/Dark Mode Toggle
+  const themeToggle = document.querySelector('.dropdown-content a[href="#"]:nth-child(3)'); 
+  // (3rd link in your dropdown)
+
+  themeToggle.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.body.classList.toggle('dark-mode');
+    
+    // Save preference
+    if (document.body.classList.contains('dark-mode')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  });
+
+  // Load saved theme
+  window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
+  });
+</script>
+
+
   <!-- LINK TO YOUR JS -->
   <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
