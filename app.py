@@ -121,7 +121,7 @@ Your task:
 2. Try to suggest such a dish that can make the users feel better, using concepts of biology and nutrition.
 3. Respect all dietary requirements and exclude any ingredients that may trigger allergies.
 4. Explain briefly *why* that dish suits their state.
-5. List 3–8 key ingredients.
+5. List all the ingredients.
 6. Add one short serving or preparation suggestion.
 7. Try to suggest different suggestions each time.
 8. Return **only valid JSON** with:
