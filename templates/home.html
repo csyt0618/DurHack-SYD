@@ -96,6 +96,7 @@
           <span id="bingingValue">50%</span>
           <label>Cravings:
             <select id="cravingSelect">
+              <option value="any">Any</option>
               <option value="sweet">Sweet</option>
               <option value="salty">Salty</option>
               <option value="spicy">Spicy</option>
@@ -118,13 +119,19 @@
     <div class="mood-box">
         <h2>Dietary Requirements</h2>
         <select id="dietSelect">
+          <option value="any">Any</option>
           <option value="vegan">Vegan</option>
           <option value="vegetarian">Vegetarian</option>
           <option value="non-vegetarian">Non-Vegetarian</option>
-          <option value="any">Any</option>
+          
         </select>
       </div>
     </section>
+
+    <div class="mood-box">
+      <h2>Allergens</h2>
+      <textarea id="allergensInput" placeholder="List or describe any allergies (e.g., peanuts, gluten, dairy)" rows="4"></textarea>
+    </div>
 
     <!-- TEXT INPUT -->
     <section class="text-section">

@@ -110,13 +110,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const paragraph = paragraphBox.value.trim();
+    const diet = document.getElementById("dietSelect").value;
+    const allergens = document.getElementById("allergensInput").value.trim();
     output.textContent = "Thinking...";
 
     try {
       const resp = await fetch("/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sliders, paragraph })
+        body: JSON.stringify({ sliders, paragraph, diet, allergens })
       });
 
       const data = await resp.json();

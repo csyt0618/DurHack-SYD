@@ -105,12 +105,16 @@ def recommend():
         data = request.get_json()
         sliders = data.get('sliders', {})
         paragraph = data.get('paragraph', '')
+        diet = data.get('diet', 'any')
+        allergens = data.get('allergens', '')
 
         prompt = f"""
 You are a friendly culinary assistant. The user gave these mood values and a short note.
 
 MOOD DATA: {json.dumps(sliders, indent=2)}
 USER NOTE: \"\"\"{paragraph.strip()}\"\"\"
+DIETARY REQUIREMENTS: {diet}
+ALLERGENS: {allergens}
 
 Your task:
 1. Suggest one dish that matches their current mood or helps them feel better.
