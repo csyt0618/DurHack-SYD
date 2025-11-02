@@ -9,7 +9,8 @@
 
 <body>
   <header>
-    <img class="logo" src="Logo.png" alt="logo">
+    <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="PsychEat-Logo">
+
     <div class="user-menu">
       <button id="userBtn">Menu ▼</button>
       <div id="dropdown" class="dropdown-content">
