@@ -4,24 +4,21 @@ import os
 from google import genai
 from dotenv import load_dotenv
 import psycopg2
+from psycopg2.extras import RealDictCursor
+
 
 # Load API key
 load_dotenv()
 client = genai.Client()
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+conn = psycopg2.connect(DATABASE_URL)
+cur = conn.cursor()
+
+
 app = Flask(__name__)
 
-FILENAME = "vault.json"
 
-def load_data():
-    if os.path.exists(FILENAME):
-        with open(FILENAME, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"user": [], "password": []}
-
-def save_data(data):
-    with open(FILENAME, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
 
 # ---------------- ROUTES ----------------
 
@@ -38,37 +35,63 @@ def login():
 def register_page():
     return render_template('register.html')
 
-@app.route("/users")
-def get_users():
-    return jsonify(load_data())
+
+
+
 
 @app.route("/add", methods=["POST"])
 def add_user():
-    data = load_data()
-    new_user = request.json.get("username")
-    new_pass = request.json.get("password")
+    """Register a new user"""
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
 
-    # ✅ Basic validation
-    if not new_user or not new_pass:
-        return jsonify({"success": False, "message": "Username and password required!"})
+        if not username or not password:
+            return jsonify({"success": False, "message": "Username and password required!"})
 
-    if new_user in data["user"]:
-        return jsonify({"success": False, "message": "Username already exists!"})
+        # Check if user already exists
+        cur.execute("SELECT * FROM users WHERE username = %s;", (username,))
+        existing_user = cur.fetchone()
 
-    data["user"].append(new_user)
-    data["password"].append(new_pass)
-    save_data(data)
+        if existing_user:
+            return jsonify({"success": False, "message": "Username already exists!"})
 
-    return jsonify({"success": True, "message": "User registered successfully!"})
+        # Insert new user
+        cur.execute("INSERT INTO users (username, password) VALUES (%s, %s);", (username, password))
+        conn.commit()
 
-# Optional: test route for JS → Flask communication
-@app.route('/process', methods=['POST'])
-def process():
-    data = request.get_json()
-    name = data.get('name', 'Guest')
-    return jsonify({'message': f'Hello {name}, Flask received your data!'})
+        return jsonify({"success": True, "message": "User registered successfully!"})
+    
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)})
 
-# ✅ Optional: page shown after successful login
+
+@app.route("/login_user", methods=["POST"])
+def login_user():
+    """Check login credentials"""
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
+
+        if not username or not password:
+            return jsonify({"success": False, "message": "Please fill all fields"})
+
+        # Check credentials
+        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s;", (username, password))
+        user = cur.fetchone()
+
+        if user:
+            return jsonify({"success": True, "message": "Login successful!"})
+        else:
+            return jsonify({"success": False, "message": "Invalid username or password"})
+
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)})
+
+
+#page shown after successful login
 @app.route("/home")
 def after_login():
     return render_template("home.html")

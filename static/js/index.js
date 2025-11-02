@@ -10,34 +10,34 @@ document.addEventListener("DOMContentLoaded", function () {
       const password = document.getElementById("password").value.trim();
 
       try {
-        const response = await fetch("/users");
-        const data = await response.json();
+        const response = await fetch("/login_user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
 
-        const users = data.user;
-        const passwords = data.password;
+        const result = await response.json();
 
-        const userIndex = users.indexOf(username);
-
-        if (userIndex !== -1 && passwords[userIndex] === password) {
+        if (result.success) {
           message.textContent = "✅ Login successful!";
           message.style.color = "green";
 
-          // redirect to /home
           setTimeout(() => {
             window.location.href = "/home";
           }, 1000);
         } else {
-          message.textContent = "❌ Invalid username or password.";
+          message.textContent = "❌ " + result.message;
           message.style.color = "red";
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error logging in:", error);
         message.textContent = "⚠️ Server error.";
         message.style.color = "orange";
       }
     });
   }
 });
+
 
 // ----------------- REGISTER PAGE -----------------
 async function registerUser() {
