@@ -10,12 +10,12 @@ body {
   position: absolute;
   top: 10px;
   left: 15px;
-  width: 60px;             /* small size */
+  width: 70px;             /* small size */
   height: auto;
   object-fit: contain;
   background: transparent;
   border: none;
-  border-radius: 30px;
+  border-radius: 35px;
   z-index: 1000;
 }
 
