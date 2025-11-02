@@ -131,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const r = data.result;
       output.innerHTML = `
         <p>🍽 Dish: ${r.dish}</p><br>
-        <p>Score: ${r.score}</p><br>
         <p>Why: ${r.reason}</p><br>
         <p>Ingredients:<br> - ${r.ingredients.join("<br> - ")}</p><br>
         <p>Suggestion: ${r.suggestion}</p>

@@ -109,7 +109,7 @@ def recommend():
         allergens = data.get('allergens', '')
 
         prompt = f"""
-You are a friendly culinary assistant. The user gave these mood values and a short note.
+You are a friendly assistant that suggests meals based on the user's mood, dietary requirements and allergies.
 
 MOOD DATA: {json.dumps(sliders, indent=2)}
 USER NOTE: \"\"\"{paragraph.strip()}\"\"\"
@@ -117,12 +117,14 @@ DIETARY REQUIREMENTS: {diet}
 ALLERGENS: {allergens}
 
 Your task:
-1. Suggest one dish that matches their current mood or helps them feel better.
-2. Explain briefly *why* that dish suits their state.
-3. List 3–8 key ingredients.
-4. Add one short serving or preparation suggestion.
-5. Return **only valid JSON** with:
-   dish, reason, ingredients (array), suggestion, score (0–100).
+1. Suggest one dish that matches their current mood.
+2. Try to suggest such a dish that can make the users feel better, using concepts of biology and nutrition.
+3. Respect all dietary requirements and exclude any ingredients that may trigger allergies.
+4. Explain briefly *why* that dish suits their state.
+5. List 3–8 key ingredients.
+6. Add one short serving or preparation suggestion.
+7. Return **only valid JSON** with:
+   dish, reason, ingredients (array), suggestion.
 """
 
         response = client.models.generate_content(
