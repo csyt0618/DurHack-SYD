@@ -3,6 +3,7 @@ import json
 import os
 from google import genai
 from dotenv import load_dotenv
+import psycopg2
 
 # Load API key
 load_dotenv()
