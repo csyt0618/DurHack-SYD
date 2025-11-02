@@ -123,7 +123,8 @@ Your task:
 4. Explain briefly *why* that dish suits their state.
 5. List 3–8 key ingredients.
 6. Add one short serving or preparation suggestion.
-7. Return **only valid JSON** with:
+7. Try to suggest different suggestions each time.
+8. Return **only valid JSON** with:
    dish, reason, ingredients (array), suggestion.
 """
 
